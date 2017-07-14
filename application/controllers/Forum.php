@@ -9,6 +9,7 @@ class Forum extends CI_Controller
     {
         parent::__construct();
         $this->load->model('forum_model');
+        $this->load->helper('url_helper');
     }
     public function index()
     {

@@ -7,7 +7,7 @@
                 <div class="panel-body">
                     <?php foreach ($threads as $thread): ?>
                       <article>
-                        <a href="#">
+                        <a href="<?php echo site_url('forum/view/'.$thread['id']);?>">
                           <h4><?php echo $thread['title']; ?></h4>
                         </a>
                           <div class="body"><?php echo $thread['body']; ?></div>

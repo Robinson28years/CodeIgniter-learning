@@ -16,7 +16,12 @@ class Forum_model extends CI_Model
             $query = $this->db->get('threads');
             return $query->result_array();
         }
-        $query = $this->db->get_where('threads', array('id' => $id));
+        $query = $this->db->select('*')
+                            ->from('threads')
+                            ->from('users')
+                            ->where('threads.id', $id)
+                            ->where('users.id = threads.user_id')
+                            ->get();
         return $query->row_array();
     }
 }
