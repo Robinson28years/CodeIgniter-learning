@@ -24,10 +24,54 @@ class Forum extends CI_Controller
     public function view($id)
     {
         $data['thread'] = $this->forum_model->get_threads($id);
+        $data['replies'] = $this->forum_model->get_replies($id);
         $data['title'] = '讨论';
 
         $this->load->view('templates/header', $data);
         $this->load->view('forum/view',$data);
         $this->load->view('templates/footer');
+    }
+    public function create()
+    {
+        $this->load->helper('form');
+        $this->load->helper('url_helper');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('body', 'Body', 'required');
+
+        $data['title'] = '创建帖子';
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('templates/header',$data);
+            $this->load->view('forum/create',$data);
+            $this->load->view('templates/footer');
+        }
+        else {
+            $this->forum_model->set_threads();
+            redirect('/forum');
+        }
+    }
+    public function update($id)
+    {
+        $this->load->helper('form');
+        $this->load->helper('url_helper');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('body', 'Body', 'required');
+
+        $data['title'] = '更新帖子';
+
+        if ($this->form_validation->run() === FALSE) {
+            $data['thread'] = $this->forum_model->get_threads($id);
+            $this->load->view('templates/header',$data);
+            $this->load->view('forum/update',$data);
+            $this->load->view('templates/footer');
+        }
+        else {
+            $this->forum_model->update_threads($id);
+            redirect('/forum/view/'.$id);
+        }
     }
 }
