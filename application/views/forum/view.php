@@ -1,7 +1,9 @@
 <div class="panel panel-default">
     <div class="panel-heading"
     ><?php echo $thread['name'] ?>
+    <?php if ($this->session->id == $thread['user_id']) {?>
     <a href="<?php echo site_url('forum/update/'.$thread['id']) ?>" class="btn btn-sm btn-success pull-right" type="button" >修改</a>
+    <?php } ?>
     </div>
 
     <div class="panel-body">
@@ -28,7 +30,7 @@
     </div>
 <?php endforeach; ?>
 </div>
-
+<?php if ($this->session->email != NULL) { ?>
 <div class="col-md-8">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
@@ -41,3 +43,4 @@
       </div>
     </div>
 </div>
+<?php } ?>

@@ -52,4 +52,28 @@ class User extends CI_Controller
         $this->session->sess_destroy();
         redirect('forum');
     }
+
+    public function register()
+    {
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+
+        $data['title'] = '注册';
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('templates/header',$data);
+            $this->load->view('user/register',$data);
+            $this->load->view('templates/footer');
+        }
+        else {
+            $this->user_model->register_user();
+
+            $email = $this->input->post('email');
+            $user = $this->user_model->get_user($email);
+            $this->session->set_userdata($user);
+
+            redirect('forum');
+        }
+    }
 }

@@ -43,7 +43,7 @@
                     @endforeach -->
                   </ul>
                 </li>
-                <li><a href="/threads/create">新的帖子</a></li>
+                <!-- <li><a href="/threads/create">新的帖子</a></li> -->
             </ul>
 
             <!-- Right Side Of Navbar -->

@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <?php if ($this->session->email != NULL) { ?>
             <a href="<?php echo site_url('forum/create') ?>" class="btn btn-success pull-right" type="button" >创建帖子</a>
+            <?php } ?>
             <div class="panel panel-default">
                 <div class="panel-heading"><?php echo $title ?></div>
 

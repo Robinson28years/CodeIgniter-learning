@@ -38,7 +38,9 @@ class Forum extends CI_Controller
     }
     public function create()
     {
-
+        if ( $this->session->email == NULL) {
+            redirect('forum');
+        }
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('body', 'Body', 'required');
@@ -58,14 +60,20 @@ class Forum extends CI_Controller
     public function update($id)
     {
 
+        $data['thread'] = $this->forum_model->get_threads($id);
+        $thread = $data['thread'];
+        // var_dump($this->session->id);
+        if ( $this->session->id != $thread['user_id']) {
+            redirect('forum');
+        }
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('body', 'Body', 'required');
 
         $data['title'] = '更新帖子';
 
-        if ($this->form_validation->run() === FALSE) {
-            $data['thread'] = $this->forum_model->get_threads($id);
+        if ($this->form_validation->run() === FALSE ) {
+
             $this->load->view('templates/header',$data);
             $this->load->view('forum/update',$data);
             $this->load->view('templates/footer');
@@ -78,6 +86,10 @@ class Forum extends CI_Controller
 
     public function reply($id)
     {
+        if ( $this->session->email == NULL) {
+            redirect('forum');
+        }
+
         $this->form_validation->set_rules('body', 'Body', 'required');
         if ($this->form_validation->run() === true) {
             $this->forum_model->set_replies($id);

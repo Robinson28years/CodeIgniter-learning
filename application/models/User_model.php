@@ -30,4 +30,16 @@ class User_model extends CI_Model
         $user = $this->db->get_where('users', array('email' => $email));
         return $user->row_array();
     }
+
+    public function register_user()
+    {
+        $password = $this->input->post('password');
+        $data = array(
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+        );
+
+        return $this->db->insert('users', $data);
+    }
 }

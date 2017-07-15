@@ -16,7 +16,7 @@ class Forum_model extends CI_Model
             $query = $this->db->get('threads');
             return $query->result_array();
         }
-        $query = $this->db->select('threads.id, threads.title, threads.body, users.name')
+        $query = $this->db->select('threads.id, threads.title, threads.body, users.id as user_id, users.name')
                             ->from('threads')
                             ->from('users')
                             ->where('threads.id', $id)
@@ -52,7 +52,7 @@ class Forum_model extends CI_Model
 
     public function get_replies($id)
     {
-        $query = $this->db->select('users.name, replies.body')
+        $query = $this->db->select('users.name, , users.id as user_id, replies.body')
                             ->from('replies')
                             ->from('users')
                             ->where('replies.thread_id', $id)
