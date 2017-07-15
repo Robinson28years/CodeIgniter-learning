@@ -19,7 +19,7 @@
   <?php foreach( $replies as $reply): ?>
     <div class="panel panel-default">
         <div class="panel-heading">
-
+            <?php echo $reply['name'] ?>
         </div>
 
         <div class="panel-body">
@@ -27,5 +27,17 @@
         </div>
     </div>
 <?php endforeach; ?>
+</div>
 
+<div class="col-md-8">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+          <?php echo validation_errors(); ?>
+          <?php echo form_open('forum/reply/'.$thread['id']); ?>
+          <label for="body">Body:</label>
+          <textarea name="body" placeholder="写一点东西" rows="8" cols="80" class="form-controller"></textarea>
+          <button type="submit"class="btn btn-success">提交</button>
+        </form>
+      </div>
+    </div>
 </div>

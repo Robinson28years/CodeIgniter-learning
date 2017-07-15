@@ -10,6 +10,8 @@ class Forum extends CI_Controller
         parent::__construct();
         $this->load->model('forum_model');
         $this->load->helper('url_helper');
+        $this->load->helper('form');
+        $this->load->library('form_validation');
     }
     public function index()
     {
@@ -23,6 +25,8 @@ class Forum extends CI_Controller
     }
     public function view($id)
     {
+
+
         $data['thread'] = $this->forum_model->get_threads($id);
         $data['replies'] = $this->forum_model->get_replies($id);
         $data['title'] = '讨论';
@@ -33,9 +37,7 @@ class Forum extends CI_Controller
     }
     public function create()
     {
-        $this->load->helper('form');
-        $this->load->helper('url_helper');
-        $this->load->library('form_validation');
+
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('body', 'Body', 'required');
@@ -54,9 +56,7 @@ class Forum extends CI_Controller
     }
     public function update($id)
     {
-        $this->load->helper('form');
-        $this->load->helper('url_helper');
-        $this->load->library('form_validation');
+
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('body', 'Body', 'required');
@@ -71,6 +71,15 @@ class Forum extends CI_Controller
         }
         else {
             $this->forum_model->update_threads($id);
+            redirect('/forum/view/'.$id);
+        }
+    }
+
+    public function reply($id)
+    {
+        $this->form_validation->set_rules('body', 'Body', 'required');
+        if ($this->form_validation->run() === true) {
+            $this->forum_model->set_replies($id);
             redirect('/forum/view/'.$id);
         }
     }

@@ -16,12 +16,13 @@ class Forum_model extends CI_Model
             $query = $this->db->get('threads');
             return $query->result_array();
         }
-        $query = $this->db->select('*')
+        $query = $this->db->select('threads.id, threads.title, threads.body, users.name')
                             ->from('threads')
                             ->from('users')
                             ->where('threads.id', $id)
-                            ->where('users.id = threads.user_id')
+                            ->where('threads.user_id = users.id')
                             ->get();
+                            // var_dump($query->row_array());
         return $query->row_array();
     }
 
@@ -47,15 +48,29 @@ class Forum_model extends CI_Model
         );
 
         $this->db->replace('threads', $data);
-
-
-
     }
 
     public function get_replies($id)
     {
-        $query = $this->db->get_where('replies',array('thread_id' => $id));
+        $query = $this->db->select('users.name, replies.body')
+                            ->from('replies')
+                            ->from('users')
+                            ->where('replies.thread_id', $id)
+                            ->where('users.id = replies.user_id')
+                            ->get();
+                            // var_dump($query->result_array());
         return $query->result_array();
+    }
+
+    public function set_replies($id)
+    {
+        $data = array(
+            'user_id' => 1,
+            'thread_id' => $id,
+            'body' => $this->input->post('body')
+        );
+
+        return $this->db->insert('replies', $data);
     }
 }
 
