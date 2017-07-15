@@ -30,7 +30,7 @@ class Forum_model extends CI_Model
     public function set_threads()
     {
         $data = array(
-            'user_id' => 1,
+            'user_id' => $this->session->id,
             'title' => $this->input->post('title'),
             'body' => $this->input->post('body')
         );
@@ -42,7 +42,7 @@ class Forum_model extends CI_Model
     {
         $data = array(
             'id' => $id,
-            'user_id' => 1,
+            'user_id' => $this->session->id,
             'title' => $this->input->post('title'),
             'body' => $this->input->post('body')
         );
@@ -65,7 +65,7 @@ class Forum_model extends CI_Model
     public function set_replies($id)
     {
         $data = array(
-            'user_id' => 1,
+            'user_id' => $this->session->id,
             'thread_id' => $id,
             'body' => $this->input->post('body')
         );

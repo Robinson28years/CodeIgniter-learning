@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="/threads">全部帖子</a></li>
+                    <li><a href="/forum">全部帖子</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         浏览
@@ -58,19 +58,19 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     <?php if($this->session->email == NULL) {?>
-                        <li><a href="<?php echo site_url('user/login');?>">Login</a></li>
+                        <li><a href="<?php echo site_url('user/login');?>">登录</a></li>
                         <!-- <li><a href="{{ route('register') }}">Register</a></li> -->
                     <?php }else{ ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                11111<?php $this->session->email ?>
+                                <?php echo $this->session->name ?>
                                 <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
                                     <a href="<?php echo site_url('user/logout');?>">
-                                        Logout
+                                        退出
                                     </a>
                                 </li>
                             </ul>
